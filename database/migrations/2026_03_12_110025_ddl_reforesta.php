@@ -33,7 +33,9 @@ return new class extends Migration
             $table->string('tipo_terreno', 50);
             $table->string('tipo_evento', 50);
             $table->string('imagen', 300);
+            $table->unsignedBigInteger('id_usuario');
             $table->timestamps();
+            $table->foreign('id_usuario')->references('id')->on('usuarios');
         });
 
         // Tabla especies
@@ -50,22 +52,23 @@ return new class extends Migration
 
         // Tabla usuarios_eventos
         Schema::create('usuarios_eventos', function (Blueprint $table) {
-            $table->id('id_usuario');
-            $table->id('id_evento');
+            $table->unsignedBigInteger('id_usuario');
+            $table->unsignedBigInteger('id_evento');
+            $table->timestamps();
             $table->primary('id_usuario', 'id_evento');
             $table->foreign('id_usuario')->references('id')->on('usuarios');
             $table->foreign('id_evento')->references('id')->on('eventos');
-            $table->timestamps();
+            
         });
 
         // Tabla eventos_especies
         Schema::create('eventos_especies', function (Blueprint $table) {
-            $table->id('id_evento');
-            $table->id('id_especie');
+            $table->unsignedBigInteger('id_evento');
+            $table->unsignedBigInteger('id_especie');
+            $table->timestamps();
             $table->primary('id_evento', 'id_especie');
             $table->foreign('id_evento')->references('id')->on('eventos');
             $table->foreign('id_especie')->references('id')->on('especies');
-            $table->timestamps();
         });
     }
 
@@ -75,25 +78,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('usuarios');
-    }
-
-    public function down(): void
-    {
         Schema::dropIfExists('eventos');
-    }
-
-    public function down(): void
-    {
         Schema::dropIfExists('especies');
-    }
-
-    public function down(): void
-    {
         Schema::dropIfExists('usuarios_eventos');
-    }
-
-    public function down(): void
-    {
         Schema::dropIfExists('eventos_especies');
     }
+
 };
