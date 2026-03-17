@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsuarioPost;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 
@@ -20,15 +21,24 @@ class UsuarioController
      */
     public function create()
     {
-        //
+        return view ('usuarios.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UsuarioPost $request)
     {
-        //
+        Usuario::create([
+        'nick' => $request->nick,
+        'nombre' => $request->nombre,
+        'apellidos' => $request->apellidos,
+        'email' => $request->email,
+        'password' => $request->password,
+        'avatar' => $request->avatar
+        ]);
+
+        return view('welcome');
     }
 
     /**

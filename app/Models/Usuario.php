@@ -23,6 +23,7 @@ class Usuario extends Authenticatable
         'apellidos',
         'email',
         'karma',
+        'password',
         'avatar'
     ];
 
