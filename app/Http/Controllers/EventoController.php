@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventoPost;
 use App\Models\Evento;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class EventoController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EventoPost $request)
     {
         Evento::create([
         'nombre' => $request->nombre,
@@ -39,7 +40,8 @@ class EventoController
         'id_usuario' => $request->id_usuario
         ]);
 
-        return view('welcome');
+        //return view('eventos.index');
+        return redirect()->route('eventos.index')->with('success', 'Evento creado correctamente');
     }
 
     /**

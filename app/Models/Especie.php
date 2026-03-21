@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Evento;
+
 
 class Especie extends Model
 {
@@ -26,5 +28,9 @@ class Especie extends Model
     ];
 
     protected $table = 'especies';
+
+    public function especiesParaEventos() {
+        return $this->belongsToMany(Evento::class, 'eventos_especies', 'id_especie', 'id_evento');
+    }
 
 }

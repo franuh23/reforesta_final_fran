@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Usuario;
+use App\Models\Especie;
 
 class Evento extends Model
 {
@@ -40,5 +41,9 @@ class Evento extends Model
 
     public function participantes() {
         return $this->belongsToMany(Usuario::class, 'usuarios_eventos', 'id_evento', 'id_usuario');
+    }
+
+    public function especiesIncluidas() {
+        return $this->belongsToMany(Especie::class, 'eventos_especies', 'id_evento', 'id_especie');
     }
 }

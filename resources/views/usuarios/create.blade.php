@@ -1,9 +1,18 @@
+@if ($errors->any())
+    <ul>
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif
+
 <form action="{{ route('usuarios.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div>
         <label for="nick">Nick:</label><br>
         <input type="text" name="nick">
     </div>
+    <br>
     <div>
         <label for="nombre">Nombre:</label><br>
         <input type="text" name="nombre">
@@ -16,7 +25,7 @@
     <br>
     <div>
         <label for="email">Email:</label><br>
-        <input type="text" name="email">
+        <input type="email" name="email">
     </div>
     <br>
     <div>

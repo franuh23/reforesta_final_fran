@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EspeciePost;
 use App\Models\Especie;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class EspecieController
      */
     public function index()
     {
-        //
+        $especies = Especie::all();
+        return view ('especies.index', compact('especies'));
     }
 
     /**
@@ -20,15 +22,25 @@ class EspecieController
      */
     public function create()
     {
-        //
+        return view ('especies.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EspeciePost $request)
     {
-        //
+        Especie::create([
+        'nombre' => $request->nombre,
+        'clima' => $request->clima,
+        'tiempo' => $request->tiempo,
+        'beneficios' => $request->beneficios,
+        'enlace' => $request->enlace,
+        'foto' => $request->foto
+        ]);
+
+        //return view('especies.index');
+        return redirect()->route('especies.index')->with('success', 'Especie creada correctamente');
     }
 
     /**

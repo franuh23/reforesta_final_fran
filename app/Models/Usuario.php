@@ -52,7 +52,7 @@ class Usuario extends Authenticatable
     }
 
     public function ser_anfitrion() {
-        return $this->hasMany(Evento::class);
+        return $this->hasMany(Evento::class, 'id_usuario');
     }
 
     public function participar() {

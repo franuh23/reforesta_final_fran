@@ -13,7 +13,10 @@ class UsuarioController
      */
     public function index()
     {
-        //
+        //$usuarios = Usuario::all();
+        $usuarios = Usuario::with(['ser_anfitrion', 'participar'])->get();
+        return view ('usuarios.index', compact('usuarios'));
+        
     }
 
     /**
@@ -34,11 +37,11 @@ class UsuarioController
         'nombre' => $request->nombre,
         'apellidos' => $request->apellidos,
         'email' => $request->email,
-        'password' => $request->password,
+        'password' => bcrypt($request->password),
         'avatar' => $request->avatar
         ]);
 
-        return view('welcome');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente');
     }
 
     /**

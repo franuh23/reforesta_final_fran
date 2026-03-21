@@ -22,7 +22,29 @@ class UsuarioPost extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => 'required|string|max:255',
+            'nick' => 'required|string|max:50|unique:usuarios,nick',
+            'email' => 'required|email|max:255|unique:usuarios,email',
+            'password' => 'required|string|min:6', // como se añade el confirmed
+        ];
+    }
+
+    /**
+     * Get the error messages result of validation
+     * 
+     * 
+     */
+    public function messages() {
+        return [
+            'nombre.required' => 'El nombre es obligatorio.',
+            'nick.required' => 'El nick es obligatorio.',
+            'nick.unique' => 'Ese nick ya está en uso.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Debes ingresar un correo electrónico válido.',
+            'email.unique' => 'Ese correo electrónico ya está registrado.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 6 carácteres.',
+            //'password.confirmed' => 'Las contraseñas no coinciden.',
         ];
     }
 }
