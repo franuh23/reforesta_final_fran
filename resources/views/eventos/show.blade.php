@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detalles de Eventos</title>
+
+
+</head>
+
+<body>
+    <div class="container">
+        @csrf
+        <h1>Detalles del Evento</h1>
+
+        <div class="eventos-lista">
+
+            <div class="evento-item">
+                <h3>{{ $evento->nombre }}</h3>
+
+                <div class="evento-info">
+                    <strong>ID anfitrión:</strong> {{ $evento->id_usuario }}
+                </div>
+
+                <div class="evento-info">
+                    <strong>Nombre anfitrión:</strong> {{ $evento->id_usuario }}
+                </div>
+                <br>
+                <div class="evento-info">
+                    <strong>Descripción:</strong>
+                    <p>{{ $evento->descripcion }}</p>
+                </div>
+
+                <div class="evento-info">
+                    <strong>Ubicación:</strong> {{ $evento->ubicacion }}
+                </div>
+
+                <div class="evento-info">
+                    <strong>Tipo de terreno:</strong> {{ $evento->tipo_terreno }}
+                </div>
+
+                <div class="evento-info">
+                    <strong>Tipo de evento:</strong> {{ $evento->tipo_evento }}
+                </div>
+
+                @if($evento->imagen)
+                    <img class="evento-imagen" src="{{ asset('storage/' . $evento->imagen) }}" alt="{{ $evento->nombre }}">
+                @endif
+                <br>
+                <a href="{{ route('eventos.edit', $evento) }}">Editar evento</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

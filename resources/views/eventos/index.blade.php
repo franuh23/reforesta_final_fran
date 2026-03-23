@@ -116,6 +116,12 @@
                                  src="{{ asset('storage/' . $evento->imagen) }}" 
                                  alt="{{ $evento->nombre }}">
                         @endif
+                        <a href="{{ route('eventos.show', $evento) }}">Ver detalles</a>
+                        <form action="{{ route('eventos.destroy', $evento) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Borrar evento</button>
+                        </form>
                     </div>
                 @endforeach
             </div>

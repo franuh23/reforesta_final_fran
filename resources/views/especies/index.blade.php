@@ -280,6 +280,7 @@
                                 </button>
                             </form>
                         </div>
+                        <a href="{{ route('especies.show', $especie) }}">Ver detalles</a>
                     </div>
                 @endforeach
             </div>

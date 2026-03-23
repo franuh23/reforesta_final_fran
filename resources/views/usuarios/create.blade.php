@@ -10,22 +10,22 @@
     @csrf
     <div>
         <label for="nick">Nick:</label><br>
-        <input type="text" name="nick">
+        <input type="text" name="nick" value="{{ old('nick') }}">
     </div>
     <br>
     <div>
         <label for="nombre">Nombre:</label><br>
-        <input type="text" name="nombre">
+        <input type="text" name="nombre" value="{{ old('nombre') }}">
     </div>
     <br>
     <div>
         <label for="apellidos">Apellidos:</label><br>
-        <input type="text" name="apellidos"></input>
+        <input type="text" name="apellidos" value="{{ old('apellidos') }}">
     </div>
     <br>
     <div>
         <label for="email">Email:</label><br>
-        <input type="email" name="email">
+        <input type="email" name="email" value="{{ old('email') }}">
     </div>
     <br>
     <div>

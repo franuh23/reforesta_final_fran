@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EspeciePost;
 use App\Models\Especie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EspecieController
 {
@@ -30,16 +31,26 @@ class EspecieController
      */
     public function store(EspeciePost $request)
     {
+        $archivoPath = null;
+
+        if ($request->hasFile('foto')) {
+            $archivoPath = $request->file('foto')->store('repositorio_ficheros', 'public');
+
+            // solo para debug
+            $archivo = $request->file('foto');
+            dump($archivo->getRealPath());
+            dump(Storage::path($archivoPath));
+        }
+
         Especie::create([
         'nombre' => $request->nombre,
         'clima' => $request->clima,
         'tiempo' => $request->tiempo,
         'beneficios' => $request->beneficios,
         'enlace' => $request->enlace,
-        'foto' => $request->foto
+        'foto' => $archivoPath,
         ]);
 
-        //return view('especies.index');
         return redirect()->route('especies.index')->with('success', 'Especie creada correctamente');
     }
 
@@ -48,7 +59,7 @@ class EspecieController
      */
     public function show(Especie $especie)
     {
-        //
+        return view ('especies.show', compact('especie'));
     }
 
     /**

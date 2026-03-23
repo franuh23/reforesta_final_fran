@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UsuarioPost;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UsuarioController
 {
@@ -13,7 +14,6 @@ class UsuarioController
      */
     public function index()
     {
-        //$usuarios = Usuario::all();
         $usuarios = Usuario::with(['ser_anfitrion', 'participar'])->get();
         return view ('usuarios.index', compact('usuarios'));
         
@@ -32,13 +32,24 @@ class UsuarioController
      */
     public function store(UsuarioPost $request)
     {
+        $archivoPath = null;
+
+        if ($request->hasFile('avatar')) {
+            $archivoPath = $request->file('avatar')->store('repositorio_ficheros', 'public');
+
+            // solo para debug
+            $archivo = $request->file('avatar');
+            dump($archivo->getRealPath());
+            dump(Storage::path($archivoPath));
+        }
+
         Usuario::create([
         'nick' => $request->nick,
         'nombre' => $request->nombre,
         'apellidos' => $request->apellidos,
         'email' => $request->email,
         'password' => bcrypt($request->password),
-        'avatar' => $request->avatar
+        'avatar' => $archivoPath,
         ]);
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente');
@@ -49,7 +60,7 @@ class UsuarioController
      */
     public function show(Usuario $usuario)
     {
-        //
+        return view ('usuarios.show', compact('usuario'));
     }
 
     /**

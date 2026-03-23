@@ -10,27 +10,27 @@
     @csrf
     <div>
         <label for="nombre">Nombre:</label><br>
-        <input type="text" name="nombre">
+        <input type="text" name="nombre" value="{{ old('nombre') }}">
     </div>
     <br>
     <div>
         <label for="clima">Clima:</label><br>
-        <input type="text" name="clima">
+        <input type="text" name="clima" value="{{ old('clima') }}">
     </div>
     <br>
     <div>
         <label for="tiempo">Tiempo:</label><br>
-        <input type="text" name="tiempo"></input>
+        <input type="text" name="tiempo" value="{{ old('tiempo') }}">
     </div>
     <br>
     <div>
         <label for="beneficios">Beneficios:</label><br>
-        <input type="text" name="beneficios">
+        <input type="text" name="beneficios" value="{{ old('beneficios') }}">
     </div>
     <br>
     <div>
         <label for="enlace">Enlace:</label><br>
-        <input type="text" name="enlace">
+        <input type="text" name="enlace" value="{{ old('enlace') }}">
     </div>
     <br>
     <br>

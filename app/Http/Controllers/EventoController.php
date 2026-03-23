@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventoPost;
 use App\Models\Evento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventoController
 {
@@ -30,13 +31,24 @@ class EventoController
      */
     public function store(EventoPost $request)
     {
+        $archivoPath = null;
+
+        if ($request->hasFile('imagen')) {
+            $archivoPath = $request->file('imagen')->store('repositorio_ficheros', 'public');
+
+            // solo para debug
+            $archivo = $request->file('imagen');
+            dump($archivo->getRealPath());
+            dump(Storage::path($archivoPath));
+        }
+
         Evento::create([
         'nombre' => $request->nombre,
         'descripcion' => $request->descripcion,
         'ubicacion' => $request->ubicacion,
         'tipo_terreno' => $request->tipo_terreno,
         'tipo_evento' => $request->tipo_evento,
-        'imagen' => $request->imagen,
+        'imagen' => $archivoPath,
         'id_usuario' => $request->id_usuario
         ]);
 
@@ -49,7 +61,7 @@ class EventoController
      */
     public function show(Evento $evento)
     {
-        //
+        return view ('eventos.show', compact('evento'));
     }
 
     /**
@@ -57,7 +69,7 @@ class EventoController
      */
     public function edit(Evento $evento)
     {
-        //
+        return view ('eventos.edit', compact('evento'));
     }
 
     /**
@@ -65,7 +77,8 @@ class EventoController
      */
     public function update(Request $request, Evento $evento)
     {
-        //
+        $evento->update($request->all());
+        return redirect()->route('eventos.index')->with('success', 'Evento modificado correctamente');
     }
 
     /**
@@ -73,6 +86,7 @@ class EventoController
      */
     public function destroy(Evento $evento)
     {
-        //
+        $evento->delete();
+        return redirect()->route('eventos.index')->with('success', 'Evento eliminado correctamente');
     }
 }
