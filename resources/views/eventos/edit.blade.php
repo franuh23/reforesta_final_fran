@@ -11,27 +11,27 @@
     @method('PUT')
     <div>
         <label for="nombre">Nombre:</label><br>
-        <input type="text" id="nombre" name="nombre">
+        <input type="text" id="nombre" name="nombre" value="{{ old('nombre', $evento->nombre)}}">
     </div>
     <br>
     <div>
         <label for="descripcion">Descripción:</label><br>
-        <textarea id="descripcion" name="descripcion" rows="4" cols="30"></textarea>
+        <textarea id="descripcion" name="descripcion" rows="4" cols="30">value="{{ old('descripcion', $evento->descripcion)}}"</textarea>
     </div>
     <br>
     <div>
         <label for="ubicacion">Ubicación:</label><br>
-        <input type="text" id="ubicacion" name="ubicacion">
+        <input type="text" id="ubicacion" name="ubicacion" value="{{ old('ubicacion', $evento->ubicacion)}}">
     </div>
     <br>
     <div>
         <label for="tipo_terreno">Tipo de terreno:</label><br>
-        <input type="text" id="tipo_terreno" name="tipo_terreno">
+        <input type="text" id="tipo_terreno" name="tipo_terreno" value="{{ old('tipo_terreno', $evento->tipo_terreno)}}">
     </div>
     <br>
     <div>
         <label for="tipo_evento">Tipo de evento:</label><br>
-        <input type="text" id="tipo_evento" name="tipo_evento">
+        <input type="text" id="tipo_evento" name="tipo_evento" value="{{ old('tipo_evento', $evento->tipo_evento)}}">
     </div>
     <br>
     <div>

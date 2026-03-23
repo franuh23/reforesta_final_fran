@@ -34,6 +34,11 @@
     </div>
     <br>
     <div>
+        <label for="fecha">Fecha del evento:</label><br>
+        <input type="date" id="fecha" name="fecha" value="{{ old('fecha') }}">
+    </div>
+    <br>
+    <div>
         <label for="id_usuario">Id usuario:</label><br>
         <input type="text" id="id_usuario" name="id_usuario" value="{{ old('id_usuario') }}">
     </div>
@@ -41,6 +46,12 @@
     <div>
         <label for="imagen">Imagen:</label><br>
         <input type="file" id="imagen" name="imagen">
+    </div>
+    <br>
+    <div>
+        <label for="pdf">Documento PDF (opcional):</label><br>
+        <input type="file" id="pdf" name="pdf" accept=".pdf">
+        <small>Sube un archivo PDF con información adicional</small>
     </div>
     <br>
     <div>

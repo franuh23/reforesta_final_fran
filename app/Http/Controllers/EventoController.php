@@ -31,15 +31,20 @@ class EventoController
      */
     public function store(EventoPost $request)
     {
-        $archivoPath = null;
+        $imagenPath = null;
+        $pdfPath = null;
 
         if ($request->hasFile('imagen')) {
-            $archivoPath = $request->file('imagen')->store('repositorio_ficheros', 'public');
+            $imagenPath = $request->file('imagen')->store('repositorio_ficheros', 'public');
 
             // solo para debug
             $archivo = $request->file('imagen');
             dump($archivo->getRealPath());
-            dump(Storage::path($archivoPath));
+            dump(Storage::path($imagenPath));
+        }
+
+        if ($request->hasFile('pdf')) {
+            $pdfPath = $request->file('pdf')->store('repositorio_ficheros', 'public');
         }
 
         Evento::create([
@@ -48,11 +53,12 @@ class EventoController
         'ubicacion' => $request->ubicacion,
         'tipo_terreno' => $request->tipo_terreno,
         'tipo_evento' => $request->tipo_evento,
-        'imagen' => $archivoPath,
+        'fecha' => $request->fecha,
+        'imagen' => $imagenPath,
+        'pdf' => $pdfPath,
         'id_usuario' => $request->id_usuario
         ]);
 
-        //return view('eventos.index');
         return redirect()->route('eventos.index')->with('success', 'Evento creado correctamente');
     }
 

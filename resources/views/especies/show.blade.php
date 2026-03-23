@@ -48,6 +48,7 @@
                     <a href="{{ $especie->enlace }}" target="_blank">🔗 Más información</a>
                 </div>
             </div>
+            <a href="{{ route('especies.edit', $especie) }}">Editar especie</a>
         </div>
     </div>
 </body>

@@ -264,23 +264,14 @@
                             {{ $especie->beneficios }}
                         </div>
                         
-                        @if($especie->enlace)
-                            <div class="enlace">
-                                <a href="{{ $especie->enlace }}" target="_blank">🔗 Más información</a>
-                            </div>
-                        @endif
-                        
                         <div class="acciones">
-                            <a href="{{ route('especies.edit', $especie->id) }}" class="btn-editar">Editar</a>
-                            <form action="{{ route('especies.destroy', $especie->id) }}" method="POST" style="display: inline;">
+                            <a href="{{ route('especies.show', $especie) }}" class="btn-editar">Ver detalles</a>
+                            <form action="{{ route('especies.destroy', $especie) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar esta especie?')">
-                                    Eliminar
-                                </button>
+                                <button type="submit" class="btn-eliminar">Eliminar</button>
                             </form>
                         </div>
-                        <a href="{{ route('especies.show', $especie) }}">Ver detalles</a>
                     </div>
                 @endforeach
             </div>

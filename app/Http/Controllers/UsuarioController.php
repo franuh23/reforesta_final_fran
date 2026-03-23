@@ -68,7 +68,7 @@ class UsuarioController
      */
     public function edit(Usuario $usuario)
     {
-        //
+        return view ('usuarios.edit', compact('usuario'));
     }
 
     /**
@@ -76,7 +76,8 @@ class UsuarioController
      */
     public function update(Request $request, Usuario $usuario)
     {
-        //
+        $usuario->update($request->all());
+        return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
     }
 
     /**
@@ -84,6 +85,7 @@ class UsuarioController
      */
     public function destroy(Usuario $usuario)
     {
-        //
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
     }
 }

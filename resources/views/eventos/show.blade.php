@@ -45,8 +45,16 @@
                     <strong>Tipo de evento:</strong> {{ $evento->tipo_evento }}
                 </div>
 
+                <div class="evento-info">
+                    <strong>Fecha del evento:</strong> {{ \Carbon\Carbon::parse($evento->fecha)->isoFormat('LL') }}
+                </div>
+
                 @if($evento->imagen)
                     <img class="evento-imagen" src="{{ asset('storage/' . $evento->imagen) }}" alt="{{ $evento->nombre }}">
+                @endif
+                <br>
+                @if($evento->pdf)
+                    <a href="{{ asset('storage/' . $evento->pdf) }}" target="_blank">📄 Ver PDF</a>
                 @endif
                 <br>
                 <a href="{{ route('eventos.edit', $evento) }}">Editar evento</a>

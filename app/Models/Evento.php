@@ -23,8 +23,14 @@ class Evento extends Model
         'ubicacion',
         'tipo_terreno',
         'tipo_evento',
+        'fecha',
         'imagen',
+        'pdf',
         'id_usuario'
+    ];
+
+    protected $casts = [
+        'fecha' => 'date',
     ];
 
     protected $table = 'eventos';

@@ -110,6 +110,10 @@
                         <div class="evento-info">
                             <strong>Tipo de evento:</strong> {{ $evento->tipo_evento }}
                         </div>
+
+                        <div class="evento-info">
+                            <strong>Fecha del evento:</strong> {{ \Carbon\Carbon::parse($evento->fecha)->isoFormat('LL') }}
+                        </div>
                         
                         @if($evento->imagen)
                             <img class="evento-imagen" 

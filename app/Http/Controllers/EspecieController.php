@@ -67,7 +67,7 @@ class EspecieController
      */
     public function edit(Especie $especie)
     {
-        //
+        return view ('especies.edit', compact('especie'));
     }
 
     /**
@@ -75,7 +75,8 @@ class EspecieController
      */
     public function update(Request $request, Especie $especie)
     {
-        //
+        $especie->update($request->all());
+        return redirect()->route('especies.index')->with('success', 'Especie modificada correctamente');
     }
 
     /**
@@ -83,6 +84,7 @@ class EspecieController
      */
     public function destroy(Especie $especie)
     {
-        //
+        $especie->delete();
+        return redirect()->route('especies.index')->with('success', 'Especie eliminada correctamente');
     }
 }

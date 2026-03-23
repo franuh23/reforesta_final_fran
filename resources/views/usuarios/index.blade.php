@@ -193,6 +193,11 @@
                             🎯 Participa en: {{ $usuario->participar->count() }} eventos
                         </div>
                         <a href="{{ route('usuarios.show', $usuario) }}">Ver detalles</a>
+                        <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Borrar usuario</button>
+                        </form>
                     </div>
 
                 @endforeach

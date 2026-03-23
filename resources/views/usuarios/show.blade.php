@@ -53,6 +53,7 @@
                 <div class="eventos-count">
                     🎯 Participa en: {{ $usuario->participar->count() }} eventos
                 </div>
+                <a href="{{ route('usuarios.edit', $usuario) }}">Editar usuario</a>
             </div>
 
         </div>
