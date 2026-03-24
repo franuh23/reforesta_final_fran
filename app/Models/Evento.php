@@ -52,4 +52,5 @@ class Evento extends Model
     public function especiesIncluidas() {
         return $this->belongsToMany(Especie::class, 'eventos_especies', 'id_evento', 'id_especie');
     }
+
 }

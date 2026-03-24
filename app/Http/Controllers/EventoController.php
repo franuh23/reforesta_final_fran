@@ -95,4 +95,12 @@ class EventoController
         $evento->delete();
         return redirect()->route('eventos.index')->with('success', 'Evento eliminado correctamente');
     }
+
+    /**
+     * Método para añadir participantes a un evento
+     */
+    public static function unirParticipante (Request $request, $id_usuario, $id_evento) {
+        $evento = Evento::findOrFail($id_evento);
+        $evento->participantes()->syncWithoutDetaching([$id_usuario]);
+    }
 }

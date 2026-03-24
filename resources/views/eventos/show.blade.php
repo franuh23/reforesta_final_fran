@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="evento-info">
-                    <strong>Nombre anfitrión:</strong> {{ $evento->id_usuario }}
+                    <strong>Nombre anfitrión:</strong> {{ $evento->anfitrion->nombre }}
                 </div>
                 <br>
                 <div class="evento-info">
@@ -47,6 +47,14 @@
 
                 <div class="evento-info">
                     <strong>Fecha del evento:</strong> {{ \Carbon\Carbon::parse($evento->fecha)->isoFormat('LL') }}
+                </div>
+
+                <div class="evento-info">
+                    <strong>Listado de participantes:</strong>
+                    @foreach ($evento->participantes as $participante ) {
+                        <p><strong>Participante: </strong> {{ $partipante->nombre }}</p>
+                    }
+                    @endforeach                   
                 </div>
 
                 @if($evento->imagen)
