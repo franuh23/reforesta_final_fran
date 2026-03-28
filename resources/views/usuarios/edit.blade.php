@@ -30,8 +30,8 @@
     </div>
     <br>
     <div>
-        <label for="password">Password:</label><br>
-        <input type="password" name="password">
+        <label for="password">Nueva contraseña (opcional):</label><br>
+        <input type="password" name="password" value="{{old('password')}}">
     </div>
     <br>
     <br>

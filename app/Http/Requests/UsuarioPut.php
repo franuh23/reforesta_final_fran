@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsuarioPost extends FormRequest
+class UsuarioPut extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +21,14 @@ class UsuarioPost extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('usuario')->id; // Obtiene el ID del usuario que se está editando
+
         return [
             'nombre' => 'required|string|max:255',
-            'nick' => 'required|string|max:50|unique:usuarios,nick',
-            'email' => 'required|email|max:255|unique:usuarios,email',
-            'password' => 'required|string|min:6',
-            'avatar' => 'extensions:jpg,png',
+            'nick' => "required|string|max:50|unique:usuarios,nick,{$userId}",
+            'email' => "required|email|max:255|unique:usuarios,email,{$userId}",
+            'password' => 'nullable|string|min:6',
+            'avatar' => 'nullable|extensions:jpg,png',
         ];
     }
 
@@ -43,9 +45,8 @@ class UsuarioPost extends FormRequest
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'Debes ingresar un correo electrónico válido.',
             'email.unique' => 'Ese correo electrónico ya está registrado.',
-            'password.required' => 'La contraseña es obligatoria.',
             'password.min' => 'La contraseña debe tener al menos 6 carácteres.',
-            'avatarzº.extensions' => 'Formato de imagen inválido, sólo jpg y png.',
+            'avatar.extensions' => 'Formato de imagen inválido, sólo jpg y png.',
         ];
     }
 }

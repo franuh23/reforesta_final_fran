@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EspeciePost;
+use App\Http\Requests\EspeciePut;
 use App\Models\Especie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -73,9 +74,16 @@ class EspecieController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Especie $especie)
+    public function update(EspeciePut $request, Especie $especie)
     {
-        $especie->update($request->all());
+        $data = $request->except(['foto']);
+
+        // Solo si sube nueva foto
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->file('foto')->store('especies/fotos', 'public');
+        }
+
+        $especie->update($data);
         return redirect()->route('especies.index')->with('success', 'Especie modificada correctamente');
     }
 

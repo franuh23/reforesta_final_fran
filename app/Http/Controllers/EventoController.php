@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventoPost;
+use App\Http\Requests\EventoPut;
 use App\Models\Evento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -81,9 +82,16 @@ class EventoController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Evento $evento)
+    public function update(EventoPut $request, Evento $evento)
     {
-        $evento->update($request->all());
+        $data = $request->except(['imagen']);
+
+        // Solo si sube nueva imagen
+        if ($request->hasFile('imagen')) {
+            $data['imagen'] = $request->file('imagen')->store('eventos/imagenes', 'public');
+        }
+
+        $evento->update($data);
         return redirect()->route('eventos.index')->with('success', 'Evento modificado correctamente');
     }
 
@@ -99,7 +107,7 @@ class EventoController
     /**
      * Método para añadir participantes a un evento
      */
-    public static function unirParticipante (Request $request, $id_usuario, $id_evento) {
+    public static function unirParticipante (Request $request, $id_evento, $id_usuario) {
         $evento = Evento::findOrFail($id_evento);
         $evento->participantes()->syncWithoutDetaching([$id_usuario]);
     }

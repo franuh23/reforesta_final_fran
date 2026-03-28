@@ -30,7 +30,7 @@ class Especie extends Model
     protected $table = 'especies';
 
     public function especiesParaEventos() {
-        return $this->belongsToMany(Evento::class, 'eventos_especies', 'id_especie', 'id_evento');
+        return $this->belongsToMany(Evento::class, 'eventos_especies', 'id_especie', 'id_evento'); //->withPivot('num_especies')->withTimestamps() hay que añadir esto aqui???
     }
 
 }

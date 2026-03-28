@@ -39,6 +39,7 @@
         <input type="file" id="imagen" name="imagen">
     </div>
     <br>
+    <input type="hidden" name="id_usuario" value="{{ $evento->id_usuario }}">
     <div>
         <button type="submit">Enviar formulario</button>
     </div>

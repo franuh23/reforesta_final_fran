@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UsuarioPost;
+use App\Http\Requests\UsuarioPut;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -74,11 +75,29 @@ class UsuarioController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Usuario $usuario)
-    {
-        $usuario->update($request->all());
-        return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
+    //public function update(UsuarioPut $request, Usuario $usuario)
+    //{
+    //    $usuario->update($request->all());
+    //    return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
+    //}
+    public function update(UsuarioPut $request, Usuario $usuario)
+{
+    $data = $request->except(['avatar', 'password']);
+    
+    // Solo si sube nueva imagen
+    if ($request->hasFile('avatar')) {
+        $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
     }
+    
+    // Solo si cambia la contraseña
+    if ($request->filled('password')) {
+        $data['password'] = bcrypt($request->password);
+    }
+    
+    $usuario->update($data);
+    
+    return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
+}
 
     /**
      * Remove the specified resource from storage.

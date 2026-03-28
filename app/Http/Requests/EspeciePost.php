@@ -25,6 +25,7 @@ class EspeciePost extends FormRequest
             'nombre' => 'required|string|max:255',
             'clima' => 'required|string|max:255',
             'tiempo' => 'required|string|max:255',
+            'foto' => 'extensions:jpg,png',
         ];
     }
 
@@ -38,6 +39,7 @@ class EspeciePost extends FormRequest
             'nombre.required' => 'El nombre es obligatorio.',
             'clima.required' => 'El clima es obligatorio.',
             'tiempo.required' => 'El tiempo es obligatorio.',
+            'foto.extensions' => 'Formato de imagen inválido, sólo jpg y png.',
         ];
     }
 }

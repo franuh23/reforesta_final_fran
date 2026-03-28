@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EventoPost extends FormRequest
+class EspeciePut extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +21,13 @@ class EventoPost extends FormRequest
      */
     public function rules(): array
     {
+        $especieId = $this->route('especie')->id;
+
         return [
             'nombre' => 'required|string|max:255',
-            'ubicacion' => 'required|string|max:255',
-            'id_usuario' => 'required',
-            'imagen' => 'extensions:jpg,png',
-            'pdf' => 'extensions:pdf',
+            'clima' => 'required|string|max:255',
+            'tiempo' => 'required|string|max:255',
+            'foto' => 'nullable|extensions:jpg,png',
         ];
     }
 
@@ -38,10 +39,9 @@ class EventoPost extends FormRequest
     public function messages() {
         return [
             'nombre.required' => 'El nombre es obligatorio.',
-            'ubicacion.required' => 'La ubicación es obligatoria.',
-            'id_usuario.required' => 'Hay que indicar un ID de usuario.',
-            'imagen.extensions' => 'Formato de imagen inválido, sólo jpg y png.',
-            'pdf.extensions' => 'Formato de pdf inválido.',
+            'clima.required' => 'El clima es obligatorio.',
+            'tiempo.required' => 'El tiempo es obligatorio.',
+            'foto.extensions' => 'Formato de imagen inválido, sólo jpg y png.',
         ];
     }
 }

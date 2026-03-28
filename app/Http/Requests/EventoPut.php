@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EventoPost extends FormRequest
+class EventoPut extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +21,14 @@ class EventoPost extends FormRequest
      */
     public function rules(): array
     {
+        $eventoId = $this->route('evento')->id;
+
         return [
             'nombre' => 'required|string|max:255',
             'ubicacion' => 'required|string|max:255',
             'id_usuario' => 'required',
-            'imagen' => 'extensions:jpg,png',
-            'pdf' => 'extensions:pdf',
+            'imagen' => 'nullable|extensions:jpg,png',
+            'pdf' => 'nullable|extensions:pdf',
         ];
     }
 

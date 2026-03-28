@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Detalles de Eventos</title>
-
+    
 
 </head>
 
@@ -51,11 +51,14 @@
 
                 <div class="evento-info">
                     <strong>Listado de participantes:</strong>
-                    @foreach ($evento->participantes as $participante ) {
-                        <p><strong>Participante: </strong> {{ $partipante->nombre }}</p>
-                    }
+                    @foreach ($evento->participantes as $participante )
+                        <p><strong>Participante: </strong> {{ $participante->nombre }}</p>
                     @endforeach                   
                 </div>
+                <form action="{{ route('eventos.unir', ['id_evento' => $evento->id, 'id_usuario' => 1]) }}" method="POST">
+                    @csrf
+                    <button type="submit">Unirse al evento</button>
+                </form>
 
                 @if($evento->imagen)
                     <img class="evento-imagen" src="{{ asset('storage/' . $evento->imagen) }}" alt="{{ $evento->nombre }}">
