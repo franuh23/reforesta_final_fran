@@ -113,7 +113,10 @@ class EventoController
     }
 
     /**
-     * Hacer método para desunirse
+     * Método para desunirse de un evento
      */
+    public static function desunirParticipante () { //Request $request, $id_evento, $id_usuario ----> esto va dentro del paréntesis, no sé si está bien
+        // con detach()
+    }
 
 }
