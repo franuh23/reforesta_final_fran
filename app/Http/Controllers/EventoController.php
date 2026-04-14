@@ -111,4 +111,9 @@ class EventoController
         $evento = Evento::findOrFail($id_evento);
         $evento->participantes()->syncWithoutDetaching([$id_usuario]);
     }
+
+    /**
+     * Hacer método para desunirse
+     */
+
 }

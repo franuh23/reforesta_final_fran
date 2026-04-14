@@ -7,6 +7,9 @@ use App\Http\Requests\UsuarioPut;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UsuarioController
 {
@@ -106,5 +109,15 @@ class UsuarioController
     {
         $usuario->delete();
         return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
+    }
+
+    // Logear usuario
+    public function login(Request $request) {
+        // anotar en web
+    }
+
+    // Deslogear usuario
+    public function logout(Request $request) {
+        // anotar en web
     }
 }
