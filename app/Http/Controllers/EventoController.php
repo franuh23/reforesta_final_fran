@@ -16,7 +16,7 @@ class EventoController
      */
     public function index()
     {
-        $eventos = Evento::all();
+        $eventos = Evento::with(['anfitrion', 'participantes', 'especiesIncluidas'])->get();
         return view ('eventos.index', compact('eventos'));
     }
 
@@ -82,6 +82,7 @@ class EventoController
      */
     public function show(Evento $evento)
     {
+        $evento->load(['anfitrion', 'participantes', 'especiesIncluidas']);
         return view ('eventos.show', compact('evento'));
     }
 
@@ -90,6 +91,7 @@ class EventoController
      */
     public function edit(Evento $evento)
     {
+        $evento->load('especiesIncluidas');
         $especies = Especie::all();
         return view ('eventos.edit', compact('evento', 'especies'));
     }
@@ -136,6 +138,12 @@ class EventoController
      */
     public static function unirParticipante (Request $request, $id_evento, $id_usuario) {
         $evento = Evento::findOrFail($id_evento);
+
+        // Comprobamos la fecha
+        if ($evento->fecha < now()) {
+            return redirect()->route('eventos.show', $evento)->with('error', 'No puedes unirte a un evento pasado');
+        }
+        
         $evento->participantes()->syncWithoutDetaching([$id_usuario]);
 
         return redirect()->route('eventos.show', $evento)->with('success', 'Se ha unido al evento satisfactoriamente');
@@ -144,8 +152,10 @@ class EventoController
     /**
      * Método para desunirse de un evento
      */
-    public static function desunirParticipante () { //Request $request, $id_evento, $id_usuario ----> esto va dentro del paréntesis, no sé si está bien
-        // con detach()
-    }
+    public static function desunirParticipante (Request $request, $id_evento, $id_usuario) {
+        $evento = Evento::findOrFail($id_evento);
+        $evento->participantes()->detach([$id_usuario]);
 
+        return redirect()->route('eventos.show', $evento)->with('success', 'Te has desunido del evento');
+    }
 }

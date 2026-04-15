@@ -61,9 +61,15 @@
                         <p><strong>Participante: </strong> {{ $participante->nombre }}</p>
                     @endforeach                   
                 </div>
+                
                 <form action="{{ route('eventos.unir', ['id_evento' => $evento->id, 'id_usuario' => 1]) }}" method="POST">
                     @csrf
                     <button type="submit">Unirse al evento</button>
+                </form>
+
+                <form action="{{ route('eventos.desunir', ['id_evento' => $evento->id, 'id_usuario' => 1]) }}" method="POST">
+                    @csrf
+                    <button type="submit">Desunirse del evento</button>
                 </form>
 
                 @if($evento->imagen)

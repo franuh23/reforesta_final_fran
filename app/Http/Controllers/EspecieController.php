@@ -15,7 +15,7 @@ class EspecieController
      */
     public function index()
     {
-        $especies = Especie::all();
+        $especies = Especie::with('especiesParaEventos')->get();
         return view ('especies.index', compact('especies'));
     }
 
@@ -60,6 +60,7 @@ class EspecieController
      */
     public function show(Especie $especie)
     {
+        $especie->load('especiesParaEventos');
         return view ('especies.show', compact('especie'));
     }
 

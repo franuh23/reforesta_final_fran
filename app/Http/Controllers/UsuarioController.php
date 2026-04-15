@@ -6,7 +6,9 @@ use App\Http\Requests\UsuarioPost;
 use App\Http\Requests\UsuarioPut;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+// Para gestión de ficheros
 use Illuminate\Support\Facades\Storage;
+// Para autenticación
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -47,7 +49,7 @@ class UsuarioController
             dump(Storage::path($archivoPath));
         }
 
-        Usuario::create([
+        $usuario = Usuario::create([
         'nick' => $request->nick,
         'nombre' => $request->nombre,
         'apellidos' => $request->apellidos,
@@ -56,7 +58,10 @@ class UsuarioController
         'avatar' => $archivoPath,
         ]);
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente');
+        // Login automático
+        Auth::login($usuario);
+
+        return redirect()->route('usuarios.show', $usuario)->with('success', 'Usuario creado y logeado correctamente');
     }
 
     /**
@@ -64,6 +69,7 @@ class UsuarioController
      */
     public function show(Usuario $usuario)
     {
+        $usuario->load(['ser_anfitrion', 'participar']);
         return view ('usuarios.show', compact('usuario'));
     }
 
@@ -78,29 +84,24 @@ class UsuarioController
     /**
      * Update the specified resource in storage.
      */
-    //public function update(UsuarioPut $request, Usuario $usuario)
-    //{
-    //    $usuario->update($request->all());
-    //    return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
-    //}
     public function update(UsuarioPut $request, Usuario $usuario)
-{
-    $data = $request->except(['avatar', 'password']);
-    
-    // Solo si sube nueva imagen
-    if ($request->hasFile('avatar')) {
-        $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+    {
+        $data = $request->except(['avatar', 'password']);
+        
+        // Solo si sube nueva imagen
+        if ($request->hasFile('avatar')) {
+            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+        }
+        
+        // Solo si cambia la contraseña
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        }
+        
+        $usuario->update($data);
+        
+        return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
     }
-    
-    // Solo si cambia la contraseña
-    if ($request->filled('password')) {
-        $data['password'] = bcrypt($request->password);
-    }
-    
-    $usuario->update($data);
-    
-    return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
-}
 
     /**
      * Remove the specified resource from storage.
@@ -113,7 +114,14 @@ class UsuarioController
 
     // Logear usuario
     public function login(Request $request) {
-        // anotar en web
+        // Intentar autenticar al usuario
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            // Redirección en caso de éxito
+            return redirect()->route('usuarios.show', Auth::user());
+        }
+
+        // Redirección en caso de error
+        return back()->withErrors(['email' => 'Usuario o contraseña incorrectos.'])->onlyInput('email');
     }
 
     // Deslogear usuario
