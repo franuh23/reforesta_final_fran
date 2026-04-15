@@ -42,6 +42,12 @@
                 </div>
 
                 <div class="evento-info">
+                    @foreach($evento->especiesIncluidas as $especie)
+                        <p>{{ $especie->nombre }} - Cantidad: {{ $especie->pivot->num_especies }}</p>
+                    @endforeach
+                </div>
+
+                <div class="evento-info">
                     <strong>Tipo de evento:</strong> {{ $evento->tipo_evento }}
                 </div>
 

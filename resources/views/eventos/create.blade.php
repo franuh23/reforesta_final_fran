@@ -44,6 +44,17 @@
     </div>
     <br>
     <div>
+        <label>Especies y cantidades:</label><br>
+        @foreach($especies as $especie)
+            <div>
+                <input type="checkbox" name="especies[{{ $especie->id }}][id]" value="{{ $especie->id }}">
+                <label>{{ $especie->nombre }}</label>
+                <input type="number" name="especies[{{ $especie->id }}][cantidad]" placeholder="Cantidad" min="1" value="1" style="width: 80px;">
+            </div>
+        @endforeach
+    </div>
+    <br>
+    <div>
         <label for="imagen">Imagen:</label><br>
         <input type="file" id="imagen" name="imagen">
     </div>

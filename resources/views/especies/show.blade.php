@@ -38,6 +38,10 @@
 
                     <strong style="margin-left: 15px;">Tiempo:</strong>
                     <span class="tiempo-badge">{{ $especie->tiempo }}</span>
+
+                    @foreach($especie->especiesParaEventos as $evento)
+                        <p>{{ $evento->nombre }} - Cantidad: {{ $evento->pivot->num_especies }}</p>
+                    @endforeach
                 </div>
 
                 <div class="beneficios">

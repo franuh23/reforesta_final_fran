@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventoPost;
 use App\Http\Requests\EventoPut;
 use App\Models\Evento;
+use App\Models\Especie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,7 +25,8 @@ class EventoController
      */
     public function create()
     {
-        return view ('eventos.create');
+        $especies = Especie::all();
+        return view ('eventos.create', compact('especies'));
     }
 
     /**
@@ -48,7 +50,8 @@ class EventoController
             $pdfPath = $request->file('pdf')->store('repositorio_ficheros', 'public');
         }
 
-        Evento::create([
+        // Guardar evento
+        $evento = Evento::create([
         'nombre' => $request->nombre,
         'descripcion' => $request->descripcion,
         'ubicacion' => $request->ubicacion,
@@ -59,6 +62,17 @@ class EventoController
         'pdf' => $pdfPath,
         'id_usuario' => $request->id_usuario
         ]);
+
+        // Guardar especies
+        if($request->has('especies')) {
+            $syncData = [];
+            foreach($request->especies as $especieData) {
+                if(isset($especieData['id'])) {
+                    $syncData[$especieData['id']] = ['num_especies' => $especieData['cantidad'] ?? 1];
+                }
+            }
+            $evento->especiesIncluidas()->sync($syncData);
+        }
 
         return redirect()->route('eventos.index')->with('success', 'Evento creado correctamente');
     }
@@ -76,7 +90,8 @@ class EventoController
      */
     public function edit(Evento $evento)
     {
-        return view ('eventos.edit', compact('evento'));
+        $especies = Especie::all();
+        return view ('eventos.edit', compact('evento', 'especies'));
     }
 
     /**
@@ -92,6 +107,18 @@ class EventoController
         }
 
         $evento->update($data);
+
+        // Sincronizar especies
+        if($request->has('especies')) {
+            $syncData = [];
+            foreach($request->especies as $especieData) {
+                if(isset($especieData['id'])) {
+                    $syncData[$especieData['id']] = ['num_especies' => $especieData['cantidad'] ?? 1];
+                }
+            }
+            $evento->especiesIncluidas()->sync($syncData);
+        }
+
         return redirect()->route('eventos.index')->with('success', 'Evento modificado correctamente');
     }
 
@@ -110,6 +137,8 @@ class EventoController
     public static function unirParticipante (Request $request, $id_evento, $id_usuario) {
         $evento = Evento::findOrFail($id_evento);
         $evento->participantes()->syncWithoutDetaching([$id_usuario]);
+
+        return redirect()->route('eventos.show', $evento)->with('success', 'Se ha unido al evento satisfactoriamente');
     }
 
     /**

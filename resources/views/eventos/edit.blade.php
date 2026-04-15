@@ -40,6 +40,24 @@
     </div>
     <br>
     <input type="hidden" name="id_usuario" value="{{ $evento->id_usuario }}">
+    <br>
+    <div>
+        <label>Especies y cantidades:</label><br>
+        @foreach($especies as $especie)
+            <div>
+                @php
+                    $pivot = $evento->especiesIncluidas->find($especie->id)?->pivot;
+                @endphp
+                <input type="checkbox" name="especies[{{ $especie->id }}][id]" value="{{ $especie->id }}" {{ $pivot ? 'checked' : '' }}>
+                <label>{{ $especie->nombre }}</label>
+                <input type="number" name="especies[{{ $especie->id }}][cantidad]" 
+                    placeholder="Cantidad" min="1" 
+                    value="{{ $pivot->num_especies ?? 1 }}" 
+                    style="width: 80px;">
+            </div>
+        @endforeach
+    </div>
+    <br>
     <div>
         <button type="submit">Enviar formulario</button>
     </div>
