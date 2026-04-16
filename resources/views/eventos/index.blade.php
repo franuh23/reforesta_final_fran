@@ -3,86 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Listado de Eventos</title>
-    
+    <title>Eventos - Reforesta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+        * {
+            margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            box-sizing: border-box;
         }
-        
+
+        :root {
+            --verde-bosque: #2d5016;
+            --verde-hoja: #4a7c23;
+            --tierra: #8b4513;
+            --crema: #faf8f5;
+            --gris: #5d6e5a;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--crema);
+            color: #2c2c2c;
+        }
+
+        h1, h2, h3, .logo-text {
+            font-family: 'Montserrat', sans-serif;
+        }
+
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0 32px;
         }
-        
-        h1 {
-            color: #333;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 10px;
+
+        /* HEADER */
+        header {
+            background: var(--verde-bosque);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #ffd700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 8px 0;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--tierra);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-outline, a.btn-outline {
+            background: transparent;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary, a.btn-primary {
+            background: var(--tierra);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover, a.btn-primary:hover {
+            background: #6b3410;
+        }
+
+        .btn-outline:hover, a.btn-outline:hover {
+            background: #ffd700;
+            color: var(--verde-bosque);
+        }
+
+        /* HERO / SLIDER simplificado */
+        .hero {
+            background: var(--verde-hoja);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+        }
+
+        /* SECCIÓN EVENTOS */
+        .section {
+            padding: 50px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--verde-bosque);
+            margin-bottom: 40px;
+        }
+
         .eventos-lista {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            gap: 30px;
         }
-        
+
         .evento-item {
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
-            background-color: #fff;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             transition: transform 0.2s;
         }
-        
+
         .evento-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
         }
-        
+
         .evento-item h3 {
-            margin-top: 0;
-            color: #4CAF50;
+            background: var(--verde-bosque);
+            color: white;
+            padding: 12px 16px;
+            font-size: 1.1rem;
+            margin: 0;
         }
-        
+
+        .evento-info {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .evento-info strong {
+            color: var(--tierra);
+            font-weight: 600;
+        }
+
+        .evento-info p {
+            display: inline;
+            color: #555;
+        }
+
+        .evento-imagen {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            margin: 0;
+        }
+
+        .evento-acciones {
+            padding: 12px 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-ver {
+            background: var(--verde-hoja);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn-eliminar {
+            background: #c0392b;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
         .no-eventos {
             text-align: center;
-            padding: 40px;
-            color: #666;
-            background-color: #f9f9f9;
-            border-radius: 5px;
+            padding: 60px;
+            background: white;
+            border-radius: 12px;
+            color: var(--gris);
         }
-        
-        .evento-imagen {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-top: 10px;
+
+        /* FOOTER */
+        footer {
+            background: var(--verde-bosque);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 40px;
         }
-        
-        .evento-info {
-            margin: 10px 0;
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
         }
-        
-        .evento-info strong {
-            color: #555;
+
+        .footer-col h4 {
+            color: #ffd700;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+
+<header>
     <div class="container">
-        @csrf
-        <h1>Listado de Eventos</h1>
-        
+        <div class="navbar">
+            <a href="{{ route('eventos.index') }}" class="logo">
+                <div class="logo-icon">🌿</div>
+                <span class="logo-text">Refore<span>sta</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="{{ route('eventos.index') }}">Eventos</a>
+                <a href="{{ route('especies.index') }}">Especies</a>
+                <a href="{{ route('usuarios.index') }}">Usuarios</a>
+                <a href="{{ route('showLogin') }}" class="btn-outline">Iniciar sesión</a>
+                <a href="{{ route('usuarios.create') }}" class="btn-primary">Registrarse</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>Eventos de Reforestación</h1>
+        <p>Participa, organiza y ayuda a recuperar nuestros bosques</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Próximos eventos</h2>
+
         @if($eventos->isEmpty())
             <div class="no-eventos">
                 <p>No hay eventos disponibles en este momento.</p>
@@ -93,43 +360,67 @@
                 @foreach ($eventos as $evento)
                     <div class="evento-item">
                         <h3>{{ $evento->nombre }}</h3>
-                        
+
+                        @if($evento->imagen)
+                            <img class="evento-imagen" src="{{ asset('storage/' . $evento->imagen) }}" alt="{{ $evento->nombre }}">
+                        @endif
+
                         <div class="evento-info">
-                            <strong>Descripción:</strong>
-                            <p>{{ $evento->descripcion }}</p>
-                        </div>
-                        
-                        <div class="evento-info">
-                            <strong>Ubicación:</strong> {{ $evento->ubicacion }}
-                        </div>
-                        
-                        <div class="evento-info">
-                            <strong>Tipo de terreno:</strong> {{ $evento->tipo_terreno }}
-                        </div>
-                        
-                        <div class="evento-info">
-                            <strong>Tipo de evento:</strong> {{ $evento->tipo_evento }}
+                            <strong>📍 Ubicación:</strong> {{ $evento->ubicacion }}
                         </div>
 
                         <div class="evento-info">
-                            <strong>Fecha del evento:</strong> {{ \Carbon\Carbon::parse($evento->fecha)->isoFormat('LL') }}
+                            <strong>📅 Fecha:</strong> {{ \Carbon\Carbon::parse($evento->fecha)->isoFormat('LL') }}
                         </div>
-                        
-                        @if($evento->imagen)
-                            <img class="evento-imagen" 
-                                 src="{{ asset('storage/' . $evento->imagen) }}" 
-                                 alt="{{ $evento->nombre }}">
-                        @endif
-                        <a href="{{ route('eventos.show', $evento) }}">Ver detalles</a>
-                        <form action="{{ route('eventos.destroy', $evento) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Borrar evento</button>
-                        </form>
+
+                        <div class="evento-info">
+                            <strong>🌱 Tipo:</strong> {{ $evento->tipo_evento }}
+                        </div>
+
+                        <div class="evento-info">
+                            <strong>🗺️ Terreno:</strong> {{ $evento->tipo_terreno }}
+                        </div>
+
+                        <div class="evento-acciones">
+                            <a href="{{ route('eventos.show', $evento) }}" class="btn-ver">Ver detalles</a>
+                            <form action="{{ route('eventos.destroy', $evento) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-eliminar" onclick="return confirm('¿Eliminar {{ $evento->nombre }}?')">Borrar</button>
+                            </form>
+                        </div>
                     </div>
                 @endforeach
             </div>
         @endif
     </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Reforesta</h4>
+                <a href="#">Sobre nosotros</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="footer-col">
+                <h4>Recursos</h4>
+                <a href="#">Eventos</a>
+                <a href="#">Especies</a>
+                <a href="#">Voluntariado</a>
+            </div>
+            <div class="footer-col">
+                <h4>Ayuda</h4>
+                <a href="#">Preguntas frecuentes</a>
+                <a href="#">Privacidad</a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 Reforesta - Fran
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>

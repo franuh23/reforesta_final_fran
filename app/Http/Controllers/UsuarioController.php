@@ -6,6 +6,7 @@ use App\Http\Requests\UsuarioPost;
 use App\Http\Requests\UsuarioPut;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 // Para gestión de ficheros
 use Illuminate\Support\Facades\Storage;
 // Para autenticación
@@ -54,6 +55,7 @@ class UsuarioController
         'nombre' => $request->nombre,
         'apellidos' => $request->apellidos,
         'email' => $request->email,
+        'karma' => 0,
         'password' => bcrypt($request->password),
         'avatar' => $archivoPath,
         ]);
@@ -119,7 +121,7 @@ class UsuarioController
     }
 
     // Logear usuario
-    public function login(Request $request) {
+    public function login(LoginRequest $request) {
 
         $credenciales = $request->only('email', 'password');
 
@@ -137,5 +139,6 @@ class UsuarioController
     // Deslogear usuario
     public function logout(Request $request) {
         Auth::logout();
+        return redirect()->route('eventos.index');
     }
 }

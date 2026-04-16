@@ -6,6 +6,7 @@ use App\Http\Requests\EventoPost;
 use App\Http\Requests\EventoPut;
 use App\Models\Evento;
 use App\Models\Especie;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -62,6 +63,9 @@ class EventoController
         'pdf' => $pdfPath,
         'id_usuario' => $request->id_usuario
         ]);
+
+        $usuario = Usuario::findOrFail($request->id_usuario);
+        $usuario->increment('karma', 4);
 
         // Guardar especies
         if($request->has('especies')) {
@@ -137,7 +141,9 @@ class EventoController
      * Método para añadir participantes a un evento
      */
     public static function unirParticipante (Request $request, $id_evento, $id_usuario) {
+        
         $evento = Evento::findOrFail($id_evento);
+        $usuario = Usuario::findOrFail($id_usuario);
 
         // Comprobamos la fecha
         if ($evento->fecha < now()) {
@@ -145,6 +151,7 @@ class EventoController
         }
         
         $evento->participantes()->syncWithoutDetaching([$id_usuario]);
+        $usuario->increment('karma', 3);
 
         return redirect()->route('eventos.show', $evento)->with('success', 'Se ha unido al evento satisfactoriamente');
     }
@@ -153,8 +160,12 @@ class EventoController
      * Método para desunirse de un evento
      */
     public static function desunirParticipante (Request $request, $id_evento, $id_usuario) {
+        
         $evento = Evento::findOrFail($id_evento);
+        $usuario = Usuario::findOrFail($id_usuario);
+
         $evento->participantes()->detach([$id_usuario]);
+        $usuario->decrement('karma', 3);
 
         return redirect()->route('eventos.show', $evento)->with('success', 'Te has desunido del evento');
     }
