@@ -112,20 +112,30 @@ class UsuarioController
         return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
     }
 
+    // Muestra el formulario de login
+    public function showLogin()
+    {
+        return view ('usuarios.login');
+    }
+
     // Logear usuario
     public function login(Request $request) {
-        // Intentar autenticar al usuario
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            // Redirección en caso de éxito
-            return redirect()->route('usuarios.show', Auth::user());
-        }
 
-        // Redirección en caso de error
-        return back()->withErrors(['email' => 'Usuario o contraseña incorrectos.'])->onlyInput('email');
+        $credenciales = $request->only('email', 'password');
+
+        if (Auth::attempt($credenciales)) 
+        {
+            $usuario = Auth::user();
+            // Autenticación exitosa
+            return redirect()->intended(route('usuarios.show', $usuario->id));
+        } else {
+            $error = 'Usuario incorrecto';
+            return view('showLogin', compact('error'));
+        }
     }
 
     // Deslogear usuario
     public function logout(Request $request) {
-        // anotar en web
+        Auth::logout();
     }
 }

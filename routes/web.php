@@ -15,3 +15,6 @@ Route::resource('usuarios', UsuarioController::class);
 Route::resource('especies', EspecieController::class)->parameters(['especies' => 'especie']);
 Route::post('/eventos/{id_evento}/unir/{id_usuario}', [EventoController::class, 'unirParticipante'])->name('eventos.unir');
 Route::post('/eventos/{id_evento}/desunir/{id_usuario}', [EventoController::class, 'desunirParticipante'])->name('eventos.desunir');
+Route::get('/showLogin', [UsuarioController::class, 'showLogin'])->name('showLogin');
+Route::post('/login', [UsuarioController::class, 'login'])->name('usuarios.login');
+Route::get('/logout', [UsuarioController::class, 'logout'])->name('usuarios.logout');

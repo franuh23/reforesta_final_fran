@@ -54,6 +54,8 @@
                     🎯 Participa en: {{ $usuario->participar->count() }} eventos
                 </div>
                 <a href="{{ route('usuarios.edit', $usuario) }}">Editar usuario</a>
+                <br>
+                <a href="{{ route('usuarios.logout') }}">Log out</a>
             </div>
 
         </div>
