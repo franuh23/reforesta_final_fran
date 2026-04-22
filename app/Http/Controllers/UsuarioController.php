@@ -22,8 +22,7 @@ class UsuarioController
     public function index()
     {
         $usuarios = Usuario::with(['ser_anfitrion', 'participar'])->get();
-        return view ('usuarios.index', compact('usuarios'));
-        
+        return view('usuarios.index', compact('usuarios'));
     }
 
     /**
@@ -31,7 +30,7 @@ class UsuarioController
      */
     public function create()
     {
-        return view ('usuarios.create');
+        return view('usuarios.create');
     }
 
     /**
@@ -51,13 +50,13 @@ class UsuarioController
         }
 
         $usuario = Usuario::create([
-        'nick' => $request->nick,
-        'nombre' => $request->nombre,
-        'apellidos' => $request->apellidos,
-        'email' => $request->email,
-        'karma' => 0,
-        'password' => bcrypt($request->password),
-        'avatar' => $archivoPath,
+            'nick' => $request->nick,
+            'nombre' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
+            'karma' => 0,
+            'password' => bcrypt($request->password),
+            'avatar' => $archivoPath,
         ]);
 
         // Login automático
@@ -72,7 +71,7 @@ class UsuarioController
     public function show(Usuario $usuario)
     {
         $usuario->load(['ser_anfitrion', 'participar']);
-        return view ('usuarios.show', compact('usuario'));
+        return view('usuarios.show', compact('usuario'));
     }
 
     /**
@@ -80,7 +79,7 @@ class UsuarioController
      */
     public function edit(Usuario $usuario)
     {
-        return view ('usuarios.edit', compact('usuario'));
+        return view('usuarios.edit', compact('usuario'));
     }
 
     /**
@@ -89,19 +88,19 @@ class UsuarioController
     public function update(UsuarioPut $request, Usuario $usuario)
     {
         $data = $request->except(['avatar', 'password']);
-        
+
         // Solo si sube nueva imagen
         if ($request->hasFile('avatar')) {
             $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
-        
+
         // Solo si cambia la contraseña
         if ($request->filled('password')) {
             $data['password'] = bcrypt($request->password);
         }
-        
+
         $usuario->update($data);
-        
+
         return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
     }
 
@@ -117,16 +116,16 @@ class UsuarioController
     // Muestra el formulario de login
     public function showLogin()
     {
-        return view ('usuarios.login');
+        return view('usuarios.login');
     }
 
     // Logear usuario
-    public function login(LoginRequest $request) {
+    public function login(LoginRequest $request)
+    {
 
         $credenciales = $request->only('email', 'password');
 
-        if (Auth::attempt($credenciales)) 
-        {
+        if (Auth::attempt($credenciales)) {
             $usuario = Auth::user();
             // Autenticación exitosa
             return redirect()->intended(route('usuarios.show', $usuario->id));
@@ -137,7 +136,8 @@ class UsuarioController
     }
 
     // Deslogear usuario
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
         return redirect()->route('eventos.index');
     }
