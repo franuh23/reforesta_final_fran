@@ -309,6 +309,14 @@
             margin-bottom: 20px;
         }
 
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
         /* FOOTER */
         footer {
             background: var(--verde-bosque);
@@ -389,6 +397,10 @@
 
         @if(session('success'))
             <div class="alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert-error">{{ session('error') }}</div>
         @endif
 
         @if($usuarios->isEmpty())

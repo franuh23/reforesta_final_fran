@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventos - Reforesta</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -26,7 +29,10 @@
             color: #2c2c2c;
         }
 
-        h1, h2, h3, .logo-text {
+        h1,
+        h2,
+        h3,
+        .logo-text {
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -118,7 +124,8 @@
             cursor: pointer;
         }
 
-        .btn-outline, a.btn-outline {
+        .btn-outline,
+        a.btn-outline {
             background: transparent;
             border: 2px solid #ffd700;
             color: #ffd700;
@@ -130,7 +137,8 @@
             display: inline-block;
         }
 
-        .btn-primary, a.btn-primary {
+        .btn-primary,
+        a.btn-primary {
             background: var(--tierra);
             color: white;
             padding: 6px 20px;
@@ -142,11 +150,13 @@
             display: inline-block;
         }
 
-        .btn-primary:hover, a.btn-primary:hover {
+        .btn-primary:hover,
+        a.btn-primary:hover {
             background: #6b3410;
         }
 
-        .btn-outline:hover, a.btn-outline:hover {
+        .btn-outline:hover,
+        a.btn-outline:hover {
             background: #ffd700;
             color: var(--verde-bosque);
         }
@@ -165,7 +175,7 @@
         }
 
         .hero p {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1rem;
         }
 
@@ -191,7 +201,7 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transition: transform 0.2s;
         }
 
@@ -266,6 +276,69 @@
             color: var(--gris);
         }
 
+        /* CALENDARIO */
+        .calendario-resumen {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .calendario-resumen h3 {
+            color: var(--verde-bosque);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .meses-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .mes-card {
+            background: var(--crema);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .mes-card h4 {
+            color: var(--tierra);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--verde-hoja);
+            padding-bottom: 8px;
+        }
+
+        .mes-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mes-card li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .mes-card li a {
+            color: var(--verde-bosque);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .mes-card li a:hover {
+            color: var(--tierra);
+            text-decoration: underline;
+        }
+
+        .mes-card p {
+            color: var(--gris);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
         /* FOOTER */
         footer {
             background: var(--verde-bosque);
@@ -290,7 +363,7 @@
 
         .footer-col a {
             display: block;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             font-size: 0.8rem;
             margin-bottom: 6px;
@@ -298,20 +371,22 @@
 
         .copyright {
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 20px;
             font-size: 0.7rem;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         @media (max-width: 768px) {
             .container {
                 padding: 0 20px;
             }
+
             .navbar {
                 flex-direction: column;
                 gap: 12px;
             }
+
             .nav-links {
                 flex-wrap: wrap;
                 justify-content: center;
@@ -319,108 +394,156 @@
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <div class="container">
-        <div class="navbar">
-            <a href="{{ route('eventos.index') }}" class="logo">
-                <div class="logo-icon">🌿</div>
-                <span class="logo-text">Refore<span>sta</span></span>
-            </a>
-            <div class="nav-links">
-                <a href="{{ route('eventos.index') }}">Eventos</a>
-                <a href="{{ route('especies.index') }}">Especies</a>
-                <a href="{{ route('usuarios.index') }}">Usuarios</a>
-                <a href="{{ route('showLogin') }}" class="btn-outline">Iniciar sesión</a>
-                <a href="{{ route('usuarios.create') }}" class="btn-primary">Registrarse</a>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <a href="{{ route('eventos.index') }}" class="logo">
+                    <div class="logo-icon">🌿</div>
+                    <span class="logo-text">Refore<span>sta</span></span>
+                </a>
+                <div class="nav-links">
+                    <a href="{{ route('eventos.index') }}">Eventos</a>
+                    <a href="{{ route('especies.index') }}">Especies</a>
+                    <a href="{{ route('usuarios.index') }}">Usuarios</a>
+                    <a href="{{ route('showLogin') }}" class="btn-outline">Iniciar sesión</a>
+                    <a href="{{ route('usuarios.create') }}" class="btn-primary">Registrarse</a>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<section class="hero">
-    <div class="container">
-        <h1>Eventos de Reforestación</h1>
-        <p>Participa, organiza y ayuda a recuperar nuestros bosques</p>
-    </div>
-</section>
+    <section class="hero">
+        <div class="container">
+            <h1>Eventos de Reforestación</h1>
+            <p>Participa, organiza y ayuda a recuperar nuestros bosques</p>
+        </div>
+    </section>
 
-<section class="section">
-    <div class="container">
-        <h2 class="section-title">Próximos eventos</h2>
+    <section class="section">
+        <div class="container">
 
-        @if($eventos->isEmpty())
-            <div class="no-eventos">
-                <p>No hay eventos disponibles en este momento.</p>
-                <p>¡Crea tu primer evento!</p>
+            <div class="calendario-resumen">
+                <h3>📅 Próximos eventos</h3>
+                <div class="meses-container">
+                    @php
+                        $fechas = [
+                            now()->startOfMonth()->format('Y-m') => now()->isoFormat('MMMM'),
+                            now()->addMonth()->startOfMonth()->format('Y-m') => now()->addMonth()->isoFormat('MMMM'),
+                            now()->addMonths(2)->startOfMonth()->format('Y-m') => now()
+                                ->addMonths(2)
+                                ->isoFormat('MMMM'),
+                        ];
+                    @endphp
+
+                    @foreach ($fechas as $mesNum => $mesNombre)
+                        @php
+                            $eventosMes = $eventos->filter(function ($evento) use ($mesNum) {
+                                return \Carbon\Carbon::parse($evento->fecha)->format('Y-m') == $mesNum;
+                            });
+                        @endphp
+                        <div class="mes-card">
+                            <h4>{{ ucfirst($mesNombre) }}</h4>
+                            @if ($eventosMes->count() > 0)
+                                <ul>
+                                    @foreach ($eventosMes as $evento)
+                                        <li>
+                                            <a href="{{ route('eventos.show', $evento) }}">
+                                                {{ \Carbon\Carbon::parse($evento->fecha)->format('d') }} -
+                                                {{ $evento->nombre }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p>No hay eventos este mes</p>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
             </div>
-        @else
-            <div class="eventos-lista">
-                @foreach ($eventos as $evento)
-                    <div class="evento-item">
-                        <h3>{{ $evento->nombre }}</h3>
 
-                        @if($evento->imagen)
-                            <img class="evento-imagen" src="{{ asset('storage/' . $evento->imagen) }}" alt="{{ $evento->nombre }}">
-                        @endif
-
-                        <div class="evento-info">
-                            <strong>📍 Ubicación:</strong> {{ $evento->ubicacion }}
-                        </div>
-
-                        <div class="evento-info">
-                            <strong>📅 Fecha:</strong> {{ \Carbon\Carbon::parse($evento->fecha)->isoFormat('LL') }}
-                        </div>
-
-                        <div class="evento-info">
-                            <strong>🌱 Tipo:</strong> {{ $evento->tipo_evento }}
-                        </div>
-
-                        <div class="evento-info">
-                            <strong>🗺️ Terreno:</strong> {{ $evento->tipo_terreno }}
-                        </div>
-
-                        <div class="evento-acciones">
-                            <a href="{{ route('eventos.show', $evento) }}" class="btn-ver">Ver detalles</a>
-                            <form action="{{ route('eventos.destroy', $evento) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-eliminar" onclick="return confirm('¿Eliminar {{ $evento->nombre }}?')">Borrar</button>
-                            </form>
-                        </div>
-                    </div>
-                @endforeach
+            <div style="text-align: right; margin-bottom: 20px;">
+                <a href="{{ route('eventos.create') }}" class="btn-primary">+ Crear nuevo evento</a>
             </div>
-        @endif
-    </div>
-</section>
 
-<footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-col">
-                <h4>Reforesta</h4>
-                <a href="#">Sobre nosotros</a>
-                <a href="#">Contacto</a>
+            @if ($eventos->isEmpty())
+                <div class="no-eventos">
+                    <p>No hay eventos disponibles en este momento.</p>
+                    <p>¡Crea tu primer evento!</p>
+                </div>
+            @else
+                <div class="eventos-lista">
+                    @foreach ($eventos as $evento)
+                        <div class="evento-item">
+                            <h3>{{ $evento->nombre }}</h3>
+
+                            @if ($evento->imagen)
+                                <img class="evento-imagen" src="{{ asset('storage/' . $evento->imagen) }}"
+                                    alt="{{ $evento->nombre }}">
+                            @endif
+
+                            <div class="evento-info">
+                                <strong>📍 Ubicación:</strong> {{ $evento->ubicacion }}
+                            </div>
+
+                            <div class="evento-info">
+                                <strong>📅 Fecha:</strong> {{ \Carbon\Carbon::parse($evento->fecha)->isoFormat('LL') }}
+                            </div>
+
+                            <div class="evento-info">
+                                <strong>🌱 Tipo:</strong> {{ $evento->tipo_evento }}
+                            </div>
+
+                            <div class="evento-info">
+                                <strong>🗺️ Terreno:</strong> {{ $evento->tipo_terreno }}
+                            </div>
+
+                            <div class="evento-acciones">
+                                <a href="{{ route('eventos.show', $evento) }}" class="btn-ver">Ver detalles</a>
+                                <form action="{{ route('eventos.destroy', $evento) }}" method="POST"
+                                    style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-eliminar"
+                                        onclick="return confirm('¿Eliminar {{ $evento->nombre }}?')">Borrar</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Reforesta</h4>
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Contacto</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Recursos</h4>
+                    <a href="#">Eventos</a>
+                    <a href="#">Especies</a>
+                    <a href="#">Voluntariado</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Ayuda</h4>
+                    <a href="#">Preguntas frecuentes</a>
+                    <a href="#">Privacidad</a>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4>Recursos</h4>
-                <a href="#">Eventos</a>
-                <a href="#">Especies</a>
-                <a href="#">Voluntariado</a>
-            </div>
-            <div class="footer-col">
-                <h4>Ayuda</h4>
-                <a href="#">Preguntas frecuentes</a>
-                <a href="#">Privacidad</a>
+            <div class="copyright">
+                © 2026 Reforesta - Fran
             </div>
         </div>
-        <div class="copyright">
-            © 2026 Reforesta - Fran
-        </div>
-    </div>
-</footer>
+    </footer>
 
 </body>
+
 </html>

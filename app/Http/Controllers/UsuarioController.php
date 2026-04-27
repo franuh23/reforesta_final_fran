@@ -101,7 +101,7 @@ class UsuarioController
 
         $usuario->update($data);
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario modificado correctamente');
+        return redirect()->route('usuarios.show', $usuario)->with('success', 'Usuario modificado correctamente');
     }
 
     /**
@@ -109,8 +109,12 @@ class UsuarioController
      */
     public function destroy(Usuario $usuario)
     {
-        $usuario->delete();
-        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
+        try {
+            $usuario->delete();
+            return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->route('usuarios.index')->with('error', 'No se puede eliminar el usuario porque tiene eventos asociados. Elimina sus eventos primero.');
+        }
     }
 
     // Muestra el formulario de login
@@ -130,8 +134,8 @@ class UsuarioController
             // Autenticación exitosa
             return redirect()->intended(route('usuarios.show', $usuario->id));
         } else {
-            $error = 'Usuario incorrecto';
-            return view('showLogin', compact('error'));
+            // Email o contraseña incorrectos
+            return back()->withErrors(['email' => 'Usuario o contraseña incorrectos.'])->onlyInput('email');
         }
     }
 

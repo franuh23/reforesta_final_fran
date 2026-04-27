@@ -85,7 +85,7 @@ class EspecieController
         }
 
         $especie->update($data);
-        return redirect()->route('especies.index')->with('success', 'Especie modificada correctamente');
+        return redirect()->route('especies.show', $especie)->with('success', 'Especie modificada correctamente');
     }
 
     /**

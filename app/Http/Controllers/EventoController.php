@@ -125,7 +125,7 @@ class EventoController
             $evento->especiesIncluidas()->sync($syncData);
         }
 
-        return redirect()->route('eventos.index')->with('success', 'Evento modificado correctamente');
+        return redirect()->route('eventos.show', $evento)->with('success', 'Evento modificado correctamente');
     }
 
     /**
@@ -141,7 +141,7 @@ class EventoController
      * Método para añadir participantes a un evento
      */
     public static function unirParticipante (Request $request, $id_evento, $id_usuario) {
-        
+
         $evento = Evento::findOrFail($id_evento);
         $usuario = Usuario::findOrFail($id_usuario);
 
@@ -149,7 +149,7 @@ class EventoController
         if ($evento->fecha < now()) {
             return redirect()->route('eventos.show', $evento)->with('error', 'No puedes unirte a un evento pasado');
         }
-        
+
         $evento->participantes()->syncWithoutDetaching([$id_usuario]);
         $usuario->increment('karma', 3);
 
@@ -160,7 +160,7 @@ class EventoController
      * Método para desunirse de un evento
      */
     public static function desunirParticipante (Request $request, $id_evento, $id_usuario) {
-        
+
         $evento = Evento::findOrFail($id_evento);
         $usuario = Usuario::findOrFail($id_usuario);
 
